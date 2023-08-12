@@ -70,8 +70,8 @@ namespace PaceCalculator
     public class Calculator
     {
         private List<Interval> intervals;
-
         public (int, int) avgPace { get; set; }
+
         public Calculator()
         {
             intervals = new List<Interval>();

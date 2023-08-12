@@ -27,11 +27,11 @@
             <TextBlock Grid.Column="3" Grid.Row="0" Margin="5" Text="Seconds"  FontWeight="DemiBold" FontSize="20"/>
             <TextBlock Grid.Column="4" Grid.Row="0" Margin="5" Text=""         FontWeight="DemiBold" FontSize="20"/>
 
-            <TextBox Grid.Column="0" Grid.Row="1" Margin="5" Text="dist"  FontSize="20"/>
-            <TextBox Grid.Column="1" Grid.Row="1" Margin="5" Text="hour"  FontSize="20"/>
-            <TextBox Grid.Column="2" Grid.Row="1" Margin="5" Text="min"   FontSize="20"/>
-            <TextBox Grid.Column="3" Grid.Row="1" Margin="5" Text="sec"   FontSize="20"/>
-            <Button  Grid.Column="4" Grid.Row="1" Margin="5" Content="X"  FontSize="20" Padding="0,-2,0,0"/>
+            <TextBox x:Name="DistBoxRow1" Grid.Column="0" Grid.Row="1" Margin="5" Text="dist" FontSize="20"/>
+            <TextBox x:Name="HourBoxRow1" Grid.Column="1" Grid.Row="1" Margin="5" Text="hour" FontSize="20"/>
+            <TextBox x:Name="MinBoxRow1"  Grid.Column="2" Grid.Row="1" Margin="5" Text="min"  FontSize="20"/>
+            <TextBox x:Name="SecBoxRow1"  Grid.Column="3" Grid.Row="1" Margin="5" Text="sec"  FontSize="20"/>
+            <Button  x:Name="XButtonRow1" Grid.Column="4" Grid.Row="1" Margin="5" Content="X" FontSize="20" Padding="0,-2,0,0" Click="XButton_Click"/>
         </Grid>
         <Button x:Name="IntervalAddButton" Click="IntervalAddButton_Click" Content="+" FontSize="25" Height="30" Width="30" Padding="0,-6,0,0" Margin="5,0,5,0" HorizontalAlignment="Right"/>
         <Button x:Name="CalculateButton" Content="Calculate" Height="30" Margin="5"/>

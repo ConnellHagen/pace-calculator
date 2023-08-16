@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Printing;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PaceCalculator
 {
@@ -29,14 +31,11 @@ namespace PaceCalculator
             InitializeComponent();
 
             calculator = new Calculator();
-            calculator.AddInterval(new Interval( (0, 1, 0), (8, 40) ));
-            calculator.AddInterval(new Interval( (0, 1, 0), (8, 32) ));
-            calculator.AddInterval(new Interval( (0, 1, 0), (8, 42) ));
-            calculator.AddInterval(new Interval( (0, 1, 0), (8, 48) ));
-            calculator.AddInterval(new Interval( (0, 1, 0), (9, 03) ));
-
-            Debug.WriteLine(calculator.avgPace);
         }
+
+        /*
+         * Event Handlers
+         */
 
         private void IntervalAddButton_Click(object sender, RoutedEventArgs e)
         {
@@ -50,6 +49,21 @@ namespace PaceCalculator
             RemoveRow(row);
         }
 
+        private void CalculateButton_Click(object sender, RoutedEventArgs e)
+        {
+            calculator.Clear();
+            if (!ExtractIntervals())
+            {
+                UnDisplayAverage();
+                return;
+            }
+            calculator.CalcAvgPace();
+            DisplayAverage();
+        }
+
+        /*
+         * Helper Methods
+         */
 
         private void AddRow()
         {
@@ -73,8 +87,9 @@ namespace PaceCalculator
             TextBox box = new TextBox
             {
                 Margin = new Thickness(5.0),
-                Text = text,
-                FontSize = 20.0
+                FontSize = 20.0,
+                BorderThickness = new Thickness(0),
+                Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xEB, 0xEB, 0xEB))
             };
             IntervalGrid.Children.Add(box);
             int row = IntervalGrid.RowDefinitions.Count - 1;
@@ -86,10 +101,6 @@ namespace PaceCalculator
             IntervalGrid.RegisterName(name, box);
         }
 
-        /*
-         * Helper Methods
-         */
-
         private void AddXToRow()
         {
             // add button to row
@@ -99,7 +110,9 @@ namespace PaceCalculator
                 Margin = new Thickness(5.0),
                 Content = "X",
                 FontSize = 20.0,
-                Padding = new Thickness(0.0, -2.0, 0.0, 0.0)
+                Padding = new Thickness(0.0, -2.0, 0.0, 0.0),
+                BorderThickness = new Thickness(0),
+                Background = new SolidColorBrush(Color.FromArgb(0xFF,0xFF,0xAD,0xAD))
             };
             xButton.Click += XButton_Click;
             IntervalGrid.Children.Add(xButton);
@@ -173,5 +186,229 @@ namespace PaceCalculator
             }
             IntervalGrid.RowDefinitions.RemoveAt(IntervalGrid.RowDefinitions.Count - 1);
         }
+
+        private void InvalidateTextBox(TextBox box)
+        {
+            box.Background = Brushes.Red;
+        }
+
+        private void ValidateTextBox(TextBox box)
+        {
+            box.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xEB, 0xEB, 0xEB));
+        }
+
+        private bool ValidateIntervals()
+        {
+            bool allValid = true;
+
+            if(IntervalGrid.RowDefinitions.Count == 0) { return false; }
+
+            for (int i = 0; i < IntervalGrid.RowDefinitions.Count; i++)
+            {
+                string rowString = i.ToString();
+
+                string[] dataFields =
+                {
+                    "DistBoxRow" + rowString,
+                    "HourBoxRow" + rowString,
+                    "MinBoxRow" + rowString,
+                    "SecBoxRow" + rowString
+                };
+
+                TextBox dist = (TextBox)IntervalGrid.FindName(dataFields[0]);
+                TextBox hour = (TextBox)IntervalGrid.FindName(dataFields[1]);
+                TextBox min = (TextBox)IntervalGrid.FindName(dataFields[2]);
+                TextBox sec = (TextBox)IntervalGrid.FindName(dataFields[3]);
+
+                string dist_text = dist.Text;
+                string hour_text = hour.Text;
+                string min_text = min.Text;
+                string sec_text = sec.Text;
+
+                try
+                {
+                    float dist_float = float.Parse(dist_text);
+                    if(dist_float <= 0.0)
+                    {
+                        InvalidateTextBox(dist);
+                        allValid = false;
+                    }
+                    else
+                    {
+                        ValidateTextBox(dist);
+                    }
+                }
+                catch(Exception e)
+                {
+                    InvalidateTextBox(dist);
+                    allValid = false;
+                }
+
+                try
+                {
+                    int hour_int = int.Parse(hour_text);
+                    if(hour_int < 0)
+                    {
+                        InvalidateTextBox(hour);
+                        allValid = false;
+                    }
+                    else
+                    {
+                        ValidateTextBox(hour);
+                    }
+                }
+                catch
+                {
+                    if(hour_text == "")
+                    {
+                        hour.Text = "0";
+                        ValidateTextBox(hour);
+                    }
+                    else
+                    {
+                        InvalidateTextBox(hour);
+                        allValid = false;
+                    }
+                }
+
+                try
+                {
+                    int min_int = int.Parse(min_text);
+                    if (min_int < 0)
+                    {
+                        InvalidateTextBox(min);
+                        allValid = false;
+                    }
+                    else
+                    {
+                        ValidateTextBox(min);
+                    }
+                }
+                catch
+                {
+                    if (min_text == "")
+                    {
+                        min.Text = "0";
+                        ValidateTextBox(min);
+                    }
+                    else
+                    {
+                        InvalidateTextBox(min);
+                        allValid = false;
+                    }
+                }
+
+                try
+                {
+                    float sec_float = float.Parse(sec_text);
+                    if (sec_float < 0.0)
+                    {
+                        InvalidateTextBox(sec);
+                        allValid = false;
+                    }
+                    else
+                    {
+                        ValidateTextBox(sec);
+                    }
+                }
+                catch (Exception e)
+                {
+                    if (sec_text == "")
+                    {
+                        sec.Text = "0.0";
+                        ValidateTextBox(sec);
+                    }
+                    else
+                    {
+                        InvalidateTextBox(sec);
+                        allValid = false;
+                    }
+                }
+
+            }
+
+            return allValid;
+        }
+
+        public bool ExtractIntervals()
+        {
+            if (!ValidateIntervals())
+                return false;
+
+            for(int i = 0; i<IntervalGrid.RowDefinitions.Count; i++)
+            {
+                string rowString = i.ToString();
+
+                string[] dataFields =
+                {
+                    "DistBoxRow" + rowString,
+                    "HourBoxRow" + rowString,
+                    "MinBoxRow" + rowString,
+                    "SecBoxRow" + rowString
+                };
+
+                TextBox _dist = (TextBox)IntervalGrid.FindName(dataFields[0]);
+                TextBox _hour = (TextBox)IntervalGrid.FindName(dataFields[1]);
+                TextBox _min = (TextBox)IntervalGrid.FindName(dataFields[2]);
+                TextBox _sec = (TextBox)IntervalGrid.FindName(dataFields[3]);
+
+                float dist = float.Parse(_dist.Text);
+                int hour = int.Parse(_hour.Text);
+                int min = int.Parse(_min.Text);
+                float sec = float.Parse(_sec.Text);
+
+                calculator.AddInterval(new Interval( dist, (hour, min, sec) ));
+            }
+
+            return true;
+        }
+
+        public void DisplayAverage()
+        {
+            RowDefinition row = (RowDefinition)IntervalGrid.FindName("AverageDisplayRow");
+            row.Height = new GridLength(55);
+
+            (int, int) avgPace = calculator.avgPace;
+            string minutes = avgPace.Item1.ToString();
+            string seconds = avgPace.Item2.ToString();
+            if(avgPace.Item2 < 10)
+            {
+                seconds = "0" + seconds;
+            }
+            string displayText = $"Average Pace: {minutes}'{seconds}\"";
+
+            TextBlock avgDisplay = new TextBlock
+            {
+                Text = displayText,
+                FontWeight = FontWeights.DemiBold,
+                TextAlignment = TextAlignment.Center,
+                FontSize = 20.0,
+                Padding = new Thickness(10),
+                Background = Brushes.LightGray,
+                Height = 50.0,
+                Margin = new Thickness(0, 5 ,0 ,0)
+            };
+
+            MainWindowLayoutGrid.Children.Add(avgDisplay);
+            try
+            {
+                MainWindowLayoutGrid.RegisterName("AverageDisplayTextBlock", avgDisplay);
+            }
+            catch (Exception e) { }
+            Grid.SetRow(avgDisplay, 4);
+        }
+
+        public void UnDisplayAverage()
+        {
+            RowDefinition row = (RowDefinition)MainWindowLayoutGrid.FindName("AverageDisplayRow");
+            row.Height = new GridLength(0);
+            try
+            {
+                MainWindowLayoutGrid.UnregisterName("AverageDisplayTextBlock");
+            }
+            catch (Exception e) { }
+        }
+
     }
+
 }

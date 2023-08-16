@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Windows.Media;
 using System.Xml.Serialization;
 
 namespace PaceCalculator
@@ -78,13 +80,17 @@ namespace PaceCalculator
             avgPace = (0, 0);
         }
 
+        public void Clear()
+        {
+            intervals = new List<Interval>();
+        }
+
         public void AddInterval(Interval interval)
         {
             intervals.Add(interval);
-            CalcAvgPace();
         }
 
-        private void CalcAvgPace()
+        public void CalcAvgPace()
         {
             float totalSeconds = 0.0f;
             float totalDistance = 0.0f;
@@ -95,6 +101,8 @@ namespace PaceCalculator
             }
             Interval calc_int = new Interval(totalDistance, (0, 0, totalSeconds) );
             avgPace = calc_int.avgPace;
+
+            Debug.WriteLine(avgPace);
         }
     }
 }

@@ -4,7 +4,8 @@ and track repeats where there are rest periods between the active periods of wor
 
 Fartlek Example (actual workout of mine)                                                                      |Track Workout Example 
 :------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------:
-![image](https://github.com/ConnellHagen/pace-calculator/assets/72321241/67b44547-6686-40e4-bbe8-3862d9afad8f)|![image](https://github.com/ConnellHagen/pace-calculator/assets/72321241/3b1c4149-8225-46ef-903d-778d3ad69a4e)
+![image](https://github.com/ConnellHagen/pace-calculator/assets/72321241/d159b9cc-8ffc-4ed9-ab91-98292128ef90)|![image](https://github.com/ConnellHagen/pace-calculator/assets/72321241/f915a783-d9cc-4301-9603-ee79d6fa4e69)
+
 
 # Usage
 The executable file will soon be made and posted in the `Releases` section. This project is made using the Windows Presentation Foundation (WPF)

@@ -13,8 +13,9 @@
 
                             <TextBlock Text="{TemplateBinding Content}"
                                        VerticalAlignment="Center"
-                                       Margin="30,0,0,0"
-                                       FontSize="16"/>
+                                       Margin="24,0,0,0"
+                                       FontSize="17"
+                                       FontWeight="DemiBold"/>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>

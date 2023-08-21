@@ -18,7 +18,8 @@
                                      VerticalContentAlignment="Center"
                                      FontSize="20"
                                      Height="40"
-                                     Foreground="#DBDBDB"/>
+                                     Foreground="#DBDBDB"
+                                     CaretBrush="#DBDBDB"/>
                         </Grid>
                     </Border>
                 </ControlTemplate>

@@ -28,7 +28,6 @@ namespace PaceCalculator.MVVM.ViewModel
 			}
 		}
 
-
 		public MainViewModel()
 		{
 			DistancedIntervalVM = new DistancedIntervalViewModel();

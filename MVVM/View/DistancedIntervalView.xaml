@@ -5,12 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PaceCalculator.MVVM.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid x:Name="MainWindowLayoutGrid" Margin="10">
+             d:DesignHeight="580" d:DesignWidth="720">
+    <Grid x:Name="DistancedIntervalLayoutGrid" Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="0" Name="AverageDisplayRow"/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
@@ -20,7 +20,7 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Margin="5" Text="Distance" FontWeight="DemiBold" Foreground="#DBDBDB" FontSize="20"/>
             <TextBlock Grid.Column="1" Margin="5" Text="Hours"    FontWeight="DemiBold" Foreground="#DBDBDB" FontSize="20"/>
@@ -28,14 +28,14 @@
             <TextBlock Grid.Column="3" Margin="5" Text="Seconds"  FontWeight="DemiBold" Foreground="#DBDBDB" FontSize="20"/>
             <TextBlock Grid.Column="4" Margin="5" Text=""         FontWeight="DemiBold" Foreground="#DBDBDB" FontSize="20"/>
         </Grid>
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" Margin="0" Background="#6D5959" Grid.ColumnSpan="2">
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" Margin="0" Background="Transparent" Grid.ColumnSpan="2">
             <Grid x:Name="IntervalGrid">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="50"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
@@ -61,12 +61,7 @@
                 <Button x:Name="XButtonRow0"
                         Grid.Column="4"
                         Grid.Row="0"
-                        Margin="5"
-                        BorderThickness="0"
-                        Background="#FFFFADAD"
-                        FontSize="20"
-                        Content="X"
-                        Padding="0,-2,0,0"/>
+                        Style="{DynamicResource RemoveButtonTheme}" />
             </Grid>
         </ScrollViewer>
         <StackPanel Grid.Row="2" Background="Transparent">

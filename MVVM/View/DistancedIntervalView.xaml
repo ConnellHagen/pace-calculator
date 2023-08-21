@@ -12,7 +12,6 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="0" Name="AverageDisplayRow"/>
-            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         <Grid Background="Transparent" Margin="0,5,0,0" Grid.Row="0">
             <Grid.ColumnDefinitions>
@@ -44,7 +43,6 @@
                 <TextBox x:Name="DistBoxRow0"
                          Grid.Column="0"
                          Grid.Row="0"
-                         Text="Hello"
                          Style="{StaticResource DataEntryBoxTheme}"/>
                 <TextBox x:Name="HourBoxRow0"
                          Grid.Column="1"
@@ -64,10 +62,20 @@
                         Style="{DynamicResource RemoveButtonTheme}" />
             </Grid>
         </ScrollViewer>
-        <StackPanel Grid.Row="2" Background="Transparent">
-            <Button x:Name="IntervalAddButton" Content="+" FontSize="25" Height="30" Width="30" Padding="0,-6,0,0" Margin="5" Background="#FFFFF5C1" BorderThickness="0" HorizontalAlignment="Right"/>
-        </StackPanel>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+            
+            <Button x:Name="CalculateButton"
+                    Grid.Column="0"
+                    Style="{StaticResource CalculateButtonTheme}"/>
+            <Button x:Name="IntervalAddButton"
+                    Grid.Column="1"
+                    Style="{StaticResource AddButtonTheme}"/>
+        </Grid>
 
-        <Button Grid.Row="4" x:Name="CalculateButton" Style="{StaticResource CalculateButtonTheme}" Margin="0,5,0,0" BorderThickness="0"/>
+
     </Grid>
 </UserControl>

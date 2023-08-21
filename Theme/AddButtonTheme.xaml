@@ -19,7 +19,7 @@
     <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
     <SolidColorBrush x:Key="Button.Disabled.Border" Color="Transparent"/>
     <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
-    <Style x:Key="RemoveButtonTheme" TargetType="{x:Type Button}">
+    <Style x:Key="AddButtonTheme" TargetType="{x:Type Button}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
         <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
         <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
@@ -48,11 +48,11 @@
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                             <ContentPresenter.Content>
-                                <TextBlock FontSize="25"
+                                <TextBlock FontSize="35"
                                            FontWeight="DemiBold"
                                            Foreground="#DBDBDB"
-                                           Padding="0,-3,0,0"
-                                           Text="X"/>
+                                           Padding="0,-8,0,0"
+                                           Text="+"/>
                             </ContentPresenter.Content>
                         </ContentPresenter>
                     </Border>

@@ -2,8 +2,25 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:PaceCalculator"
+             xmlns:viewModel="clr-namespace:PaceCalculator.MVVM.ViewModel"
+             xmlns:view="clr-namespace:PaceCalculator.MVVM.View"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Theme/MenuButtonTheme.xaml"/>
+                <ResourceDictionary Source="Theme/DataEntryBoxTheme.xaml"/>
+                <ResourceDictionary Source="Theme/CalculateButtonTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate DataType="{x:Type viewModel:DistancedIntervalViewModel}">
+                <view:DistancedIntervalView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:PacedIntervalViewModel}">
+                <view:PacedIntervalView/>
+            </DataTemplate>
+
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

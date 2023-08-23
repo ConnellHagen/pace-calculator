@@ -3,31 +3,20 @@ using System.Windows.Input;
 
 namespace PaceCalculator.Core
 {
-    class RelayCommand : ICommand
+    public abstract class RelayCommand : ICommand
     {
-        private Action<object?> _execute;
-        private Func<object?, bool>? _canExecute;
+        public event EventHandler? CanExecuteChanged;
 
-        public event EventHandler? CanExecuteChanged
+        public virtual bool CanExecute(object? parameter)
         {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
+            return true;
         }
 
-        public RelayCommand(Action<object?> execute, Func<object?, bool>? canExecute = null)
-        {
-            _execute = execute;
-            _canExecute = canExecute;
-        }
+        public abstract void Execute(object? parameter);
 
-        public bool CanExecute(object? parameter)
+        protected void OnCanExecuteChanged()
         {
-            return _canExecute == null || _canExecute(parameter);
-        }
-
-        public void Execute(object? parameter)
-        {
-            _execute(parameter);
+            CanExecuteChanged?.Invoke(this, new EventArgs());
         }
     }
 }

@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace PaceCalculator.Core
 {
-    class ObservableObject : INotifyPropertyChanged
+    public class ObservableObject : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected void OnPropertyChanged([CallerMemberName] string? name = null)
+        protected void OnPropertyChanged([CallerMemberName] string? name = null) // might need to change this definition so i pass it in manually ??
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }

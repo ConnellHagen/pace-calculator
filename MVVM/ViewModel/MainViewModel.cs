@@ -1,18 +1,9 @@
 ﻿using PaceCalculator.Core;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PaceCalculator.MVVM.ViewModel
 {
-    class MainViewModel : ObservableObject
+    public class MainViewModel : ObservableObject
     {
-        public RelayCommand DistancedIntervalCommand { get; set; }
-        public RelayCommand PacedIntervalCommand { get; set; }
-
         public DistancedIntervalViewModel DistancedIntervalVM { get; set; }
         public PacedIntervalViewModel PacedIntervalVM { get; set; }
 
@@ -32,17 +23,7 @@ namespace PaceCalculator.MVVM.ViewModel
 		{
 			DistancedIntervalVM = new DistancedIntervalViewModel();
 			PacedIntervalVM = new PacedIntervalViewModel();
-            CurrentView = DistancedIntervalVM;
-
-			DistancedIntervalCommand = new RelayCommand(o =>
-			{
-				CurrentView = DistancedIntervalVM;
-			});
-
-			PacedIntervalCommand = new RelayCommand(o =>
-			{
-				CurrentView = PacedIntervalVM;
-			});
+            _currentView = DistancedIntervalVM;
 		}
 
 	}

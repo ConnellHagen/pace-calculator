@@ -1,12 +1,10 @@
 ﻿using PaceCalculator.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PaceCalculator.MVVM.ViewModel
 {
-    class PacedIntervalViewModel : ObservableObject
-    {}
+    public class PacedIntervalViewModel : ObservableObject
+    {
+        public PacedIntervalViewModel()
+        {}
+    }
 }

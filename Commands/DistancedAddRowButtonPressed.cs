@@ -29,6 +29,8 @@ namespace PaceCalculator.Commands
         public override void Execute(object? parameter)
         {
             _viewModel.DistancedGridRows.Add(new DistancedIntervalGridRow());
+
+            Debug.WriteLine(_viewModel.DistancedGridRows[0].Minutes);
         }
 
         private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)

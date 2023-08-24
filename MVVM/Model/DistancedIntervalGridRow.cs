@@ -1,41 +1,141 @@
-﻿namespace PaceCalculator.MVVM.Model
+﻿using PaceCalculator.Core;
+using System;
+using System.Collections;
+using System.ComponentModel;
+using System.Diagnostics;
+
+namespace PaceCalculator.MVVM.Model
 {
-    public class DistancedIntervalGridRow
+    public class DistancedIntervalGridRow : ObservableObject
     {
-        private float _distance;
-        public float Distance
+
+        private string _distance;
+        public string Distance
         {
             get { return _distance; }
-            set { _distance = value; }
+            set
+            {
+                if(_distance != value)
+                {
+                    _distance = value;
+                    IsDistanceValid = IsValidFloatEntry(Distance);
+                    OnPropertyChanged(nameof(Distance));
+                }
+            }
         }
 
-        private float _hours;
-        public float Hours
+        private string _hours;
+        public string Hours
         {
             get { return _hours; }
-            set { _hours = value; }
+            set
+            {
+                if(_hours != value)
+                {
+                    _hours = value;
+                    IsSecondsValid = IsValidIntEntry(Hours);
+                    OnPropertyChanged(nameof(Hours));
+                }
+            }
         }
 
-        private float _minutes;
-        public float Minutes
+        private string _minutes;
+        public string Minutes
         {
             get { return _minutes; }
-            set { _minutes = value; }
+            set
+            {
+                if(_minutes != value)
+                {
+                    _minutes = value;
+                    IsMinutesValid = IsValidIntEntry(Minutes);
+                    OnPropertyChanged(nameof(Minutes));
+                }
+            }
         }
 
-        private float _seconds;
-        public float Seconds
+        private string _seconds;
+        public string Seconds
         {
             get { return _seconds; }
-            set { _seconds = value; }
+            set
+            {
+                if(_seconds != value)
+                {
+                    _seconds = value;
+                    IsSecondsValid = IsValidFloatEntry(Seconds);
+                    OnPropertyChanged(nameof(Seconds));
+                }
+            }
+
         }
+
+        public bool IsDistanceValid { get; set; }
+        public bool IsHoursValid { get; set; }
+        public bool IsMinutesValid { get; set; }
+        public bool IsSecondsValid { get; set; }
 
         public DistancedIntervalGridRow()
         {
-            _distance = 0;
-            _hours = 0;
-            _minutes = 0;
-            _seconds = 0;
+            _distance = "";
+            _hours = "";
+            _minutes = "";
+            _seconds = "";
+            IsDistanceValid = false;
+            IsHoursValid = false;
+            IsMinutesValid = false;
+            IsSecondsValid = false;
         }
+
+        private bool IsValidFloatEntry(string test)
+        {
+            float? val = ToFloat(test);
+
+            if (val == null)
+            {
+                return false;
+            }
+
+            return val >= 0;
+        }
+        private float? ToFloat(string s)
+        {
+            if (s == "") { return null; }
+
+            float val;
+
+            if (float.TryParse(s, out val))
+            {
+                return val;
+            }
+
+            return null;
+        }
+
+        private bool IsValidIntEntry(string test)
+        {
+            int? val = ToInt(test);
+
+            if (val == null)
+            {
+                return false;
+            }
+
+            return val >= 0;
+        }
+        private int? ToInt(string s)
+        {
+            if (s == "") { return null; }
+
+            int val;
+
+            if (int.TryParse(s, out val))
+            {
+                return val;
+            }
+
+            return null;
+        }
+
     }
 }

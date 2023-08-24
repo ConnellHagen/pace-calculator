@@ -6,13 +6,17 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
                     <Border CornerRadius="10"
-                            Background="#676767"
+                            Background="{TemplateBinding Background}" 
                             Height="40"
                             Margin="5">
+                        <!--invalid background /\ #C96964   valid background #676767-->
                         <Grid>
                             <Rectangle StrokeThickness="1"/>
                             <TextBox Margin="10,0,10,0"
-                                     Text="{TemplateBinding Text}"
+                                     Text="{Binding Path=Text,
+                                            RelativeSource={RelativeSource TemplatedParent}, 
+                                            Mode=TwoWay,
+                                            UpdateSourceTrigger=PropertyChanged}"
                                      BorderThickness="0"
                                      Background="Transparent"
                                      VerticalContentAlignment="Center"

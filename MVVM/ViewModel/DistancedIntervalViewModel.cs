@@ -1,11 +1,14 @@
 ﻿using PaceCalculator.Commands;
 using PaceCalculator.Core;
 using PaceCalculator.MVVM.Model;
+using System;
+using System.Collections;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace PaceCalculator.MVVM.ViewModel
 {
-    public class DistancedIntervalViewModel : ObservableObject
+    public class DistancedIntervalViewModel : ObservableObject /*, INotifyDataErrorInfo*/
     {
         private Calculator _calculator; //for calculations
         public Calculator DistancedCalculator
@@ -24,6 +27,17 @@ namespace PaceCalculator.MVVM.ViewModel
             }
         }
 
+        private bool _canCalculate;
+        public bool CanCalculate
+        {
+            get { return _canCalculate; }
+            set
+            {
+                _canCalculate = value;
+                OnPropertyChanged(nameof(CanCalculate));
+            }
+        }
+
         private ObservableCollection<DistancedIntervalGridRow> _distancedGridRows;
         public ObservableCollection<DistancedIntervalGridRow> DistancedGridRows
         {
@@ -39,7 +53,6 @@ namespace PaceCalculator.MVVM.ViewModel
         public DistancedAddRowButtonPressed AddRowButtonCommand { get; }
         public DistancedRemoveRowButtonPressed RemoveRowButtonCommand { get; }
 
-
         public DistancedIntervalViewModel()
         {
             _calculator = new Calculator();
@@ -52,5 +65,7 @@ namespace PaceCalculator.MVVM.ViewModel
             AddRowButtonCommand = new DistancedAddRowButtonPressed(this);
             RemoveRowButtonCommand = new DistancedRemoveRowButtonPressed(this);
         }
+
+       
     }
 }

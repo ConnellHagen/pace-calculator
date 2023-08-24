@@ -5,8 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PaceCalculator.MVVM.View"
              xmlns:viewModel="clr-namespace:PaceCalculator.MVVM.ViewModel"
+             xmlns:converter="clr-namespace:PaceCalculator.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="580" d:DesignWidth="720">
+    
+    <UserControl.Resources>
+        <converter:ValidityToEntryBoxColorConverter x:Key="EntryBoxConverter"/>
+    </UserControl.Resources>
     
     <UserControl.DataContext>
         <viewModel:DistancedIntervalViewModel/>
@@ -60,17 +65,21 @@
                                 </Grid.ColumnDefinitions>
 
                                 <TextBox Grid.Column="0"
-                                         Text="{Binding Distance}"
-                                         Style="{StaticResource DataEntryBoxTheme}"/>
+                                         Text="{Binding Path=Distance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{StaticResource DataEntryBoxTheme}"
+                                         Background="{Binding Path=IsDistanceValid, Converter={StaticResource EntryBoxConverter}}"/>
                                 <TextBox Grid.Column="1"
-                                         Text="{Binding Hours}"
-                                         Style="{StaticResource DataEntryBoxTheme}"/>
+                                         Text="{Binding Path=Hours, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{StaticResource DataEntryBoxTheme}"
+                                         Background="{Binding Path=IsHoursValid, Converter={StaticResource EntryBoxConverter}}"/>
                                 <TextBox Grid.Column="2"
-                                         Text="{Binding Minutes}"
-                                         Style="{StaticResource DataEntryBoxTheme}"/>
+                                         Text="{Binding Path=Minutes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{StaticResource DataEntryBoxTheme}"
+                                         Background="{Binding Path=IsMinutesValid, Converter={StaticResource EntryBoxConverter}}"/>
                                 <TextBox Grid.Column="3"
-                                         Text="{Binding Seconds}"
-                                         Style="{StaticResource DataEntryBoxTheme}"/>
+                                         Text="{Binding Path=Seconds, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{StaticResource DataEntryBoxTheme}"
+                                         Background="{Binding Path=IsSecondsValid, Converter={StaticResource EntryBoxConverter}}"/>
                                 <Button Grid.Column="4"
                                         Command="{Binding DataContext.RemoveRowButtonCommand,
                                                           RelativeSource={RelativeSource AncestorType=ItemsControl}}"

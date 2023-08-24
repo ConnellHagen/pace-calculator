@@ -16,9 +16,9 @@
     <SolidColorBrush x:Key="Button.MouseOver.Border" Color="Transparent"/>
     <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FE4534"/>
     <SolidColorBrush x:Key="Button.Pressed.Border" Color="Transparent"/>
-    <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+    <SolidColorBrush x:Key="Button.Disabled.Background" Color="#676767"/>
     <SolidColorBrush x:Key="Button.Disabled.Border" Color="Transparent"/>
-    <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+    <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#828282"/>
     <Style x:Key="CalculateButtonTheme" TargetType="{x:Type Button}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
         <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
@@ -47,7 +47,8 @@
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                             <ContentPresenter.Content>
-                                <TextBlock FontSize="25"
+                                <TextBlock x:Name="ButtonText"
+                                           FontSize="25"
                                            FontWeight="DemiBold"
                                            Foreground="#DBDBDB"
                                            Text="Calculate"/>
@@ -89,6 +90,9 @@
                                     Value="{StaticResource Button.Disabled.Border}"/>
                             <Setter Property="TextElement.Foreground"
                                     TargetName="contentPresenter"
+                                    Value="{StaticResource Button.Disabled.Foreground}"/>
+                            <Setter Property="Foreground"
+                                    TargetName="ButtonText"
                                     Value="{StaticResource Button.Disabled.Foreground}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>

@@ -14,9 +14,9 @@
                             <Rectangle StrokeThickness="1"/>
                             <TextBox Margin="10,0,10,0"
                                      Text="{Binding Path=Text,
-                                            RelativeSource={RelativeSource TemplatedParent}, 
-                                            Mode=TwoWay,
-                                            UpdateSourceTrigger=PropertyChanged}"
+                                                    RelativeSource={RelativeSource TemplatedParent}, 
+                                                    Mode=TwoWay,
+                                                    UpdateSourceTrigger=PropertyChanged}"
                                      BorderThickness="0"
                                      Background="Transparent"
                                      VerticalContentAlignment="Center"

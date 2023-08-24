@@ -1,6 +1,5 @@
 ﻿using PaceCalculator.Core;
 using System;
-using System.Collections;
 using System.ComponentModel;
 using System.Diagnostics;
 
@@ -9,7 +8,7 @@ namespace PaceCalculator.MVVM.Model
     public class DistancedIntervalGridRow : ObservableObject
     {
 
-        private string _distance;
+        private string _distance = "";
         public string Distance
         {
             get { return _distance; }
@@ -19,12 +18,27 @@ namespace PaceCalculator.MVVM.Model
                 {
                     _distance = value;
                     IsDistanceValid = IsValidFloatEntry(Distance);
+                    ValidateRow();
                     OnPropertyChanged(nameof(Distance));
                 }
             }
         }
 
-        private string _hours;
+        private bool _isDistanceValid = false;
+        public bool IsDistanceValid
+        {
+            get { return _isDistanceValid; }
+            set
+            {
+                if (_isDistanceValid != value)
+                {
+                    _isDistanceValid = value;
+                    OnPropertyChanged(nameof(IsDistanceValid));
+                }
+            }
+        }
+
+        private string _hours = "";
         public string Hours
         {
             get { return _hours; }
@@ -33,13 +47,28 @@ namespace PaceCalculator.MVVM.Model
                 if(_hours != value)
                 {
                     _hours = value;
-                    IsSecondsValid = IsValidIntEntry(Hours);
+                    IsHoursValid = IsValidIntEntry(Hours);
+                    ValidateRow();
                     OnPropertyChanged(nameof(Hours));
                 }
             }
         }
 
-        private string _minutes;
+        private bool _isHoursValid = true;
+        public bool IsHoursValid
+        {
+            get { return _isHoursValid; }
+            set
+            {
+                if (_isHoursValid != value)
+                {
+                    _isHoursValid = value;
+                    OnPropertyChanged(nameof(IsHoursValid));
+                }
+            }
+        }
+
+        private string _minutes = "";
         public string Minutes
         {
             get { return _minutes; }
@@ -49,12 +78,27 @@ namespace PaceCalculator.MVVM.Model
                 {
                     _minutes = value;
                     IsMinutesValid = IsValidIntEntry(Minutes);
+                    ValidateRow();
                     OnPropertyChanged(nameof(Minutes));
                 }
             }
         }
 
-        private string _seconds;
+        private bool _isMinutesValid = true;
+        public bool IsMinutesValid
+        {
+            get { return _isMinutesValid; }
+            set
+            {
+                if (_isMinutesValid != value)
+                {
+                    _isMinutesValid = value;
+                    OnPropertyChanged(nameof(IsMinutesValid));
+                }
+            }
+        }
+
+        private string _seconds = "";
         public string Seconds
         {
             get { return _seconds; }
@@ -64,27 +108,42 @@ namespace PaceCalculator.MVVM.Model
                 {
                     _seconds = value;
                     IsSecondsValid = IsValidFloatEntry(Seconds);
+                    ValidateRow();
                     OnPropertyChanged(nameof(Seconds));
                 }
             }
-
         }
 
-        public bool IsDistanceValid { get; set; }
-        public bool IsHoursValid { get; set; }
-        public bool IsMinutesValid { get; set; }
-        public bool IsSecondsValid { get; set; }
+        private bool _isSecondsValid = true;
+        public bool IsSecondsValid
+        {
+            get { return _isSecondsValid; }
+            set
+            {
+                if (_isSecondsValid != value)
+                {
+                    _isSecondsValid = value;
+                    OnPropertyChanged(nameof(IsSecondsValid));
+                }
+            }
+        }
+
+        private bool _isValid = false;
+        public bool IsValid
+        {
+            get { return _isValid; }
+            set
+            {
+                if(_isValid != value)
+                {
+                    _isValid = value;
+                    OnPropertyChanged(nameof(IsValid));
+                }
+            }
+        }
 
         public DistancedIntervalGridRow()
         {
-            _distance = "";
-            _hours = "";
-            _minutes = "";
-            _seconds = "";
-            IsDistanceValid = false;
-            IsHoursValid = false;
-            IsMinutesValid = false;
-            IsSecondsValid = false;
         }
 
         private bool IsValidFloatEntry(string test)
@@ -100,7 +159,7 @@ namespace PaceCalculator.MVVM.Model
         }
         private float? ToFloat(string s)
         {
-            if (s == "") { return null; }
+            if (s == "") { return 0.0f; }
 
             float val;
 
@@ -125,7 +184,7 @@ namespace PaceCalculator.MVVM.Model
         }
         private int? ToInt(string s)
         {
-            if (s == "") { return null; }
+            if (s == "") { return 0; }
 
             int val;
 
@@ -135,6 +194,27 @@ namespace PaceCalculator.MVVM.Model
             }
 
             return null;
+        }
+
+        /* updates `IsValid` as false if:
+         * 1. all fields do not individually evaluate to valid
+         * OR
+         * 2. the total distance or total time is 0
+         * else, `IsValid` is set to true
+         */
+        private void ValidateRow()
+        {
+            bool oldIsValid = IsValid;
+            if(!(IsDistanceValid && IsHoursValid && IsMinutesValid && IsSecondsValid) || 
+                (ToFloat(Distance) == 0.0f) ||
+                (ToInt(Hours) == 0 && ToInt(Minutes) == 0 && ToFloat(Seconds) == 0.0f))
+            {
+                IsValid = false;
+            }
+            else
+            {
+                IsValid = true;
+            }
         }
 
     }

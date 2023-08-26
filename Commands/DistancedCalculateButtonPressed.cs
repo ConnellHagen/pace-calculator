@@ -1,8 +1,6 @@
 ﻿using PaceCalculator.Core;
 using PaceCalculator.MVVM.Model;
 using PaceCalculator.MVVM.ViewModel;
-using System;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -31,7 +29,26 @@ namespace PaceCalculator.Commands
         }
 
         public override void Execute(object? parameter)
-        { }
+        {
+            _viewModel.DistancedCalculator.Clear();
+
+            foreach (DistancedIntervalGridRow row in _viewModel.DistancedGridRows)
+            {
+                _viewModel.DistancedCalculator.AddInterval(
+                    new Interval(
+                        (float)DistancedIntervalGridRow.ToFloat(row.Distance), (
+                            (int)DistancedIntervalGridRow.ToInt(row.Hours),
+                            (int)DistancedIntervalGridRow.ToInt(row.Minutes),
+                            (float)DistancedIntervalGridRow.ToFloat(row.Seconds)
+                        )
+                    )
+                );
+            }
+
+            _viewModel.DistancedCalculator.CalcAvgPace();
+
+            _viewModel.IsPaceShown = true;
+        }
 
         private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {

@@ -9,7 +9,6 @@
                             Background="{TemplateBinding Background}" 
                             Height="40"
                             Margin="5">
-                        <!--invalid background /\ #C96964   valid background #676767-->
                         <Grid>
                             <Rectangle StrokeThickness="1"/>
                             <TextBox Margin="10,0,10,0"

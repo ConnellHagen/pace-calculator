@@ -17,7 +17,7 @@ namespace PaceCalculator.MVVM.Model
                 if(_distance != value)
                 {
                     _distance = value;
-                    IsDistanceValid = IsValidFloatEntry(Distance);
+                    IsDistanceValid = IsValidFloatEntry(Distance) && ToFloat(Distance) != 0;
                     ValidateRow();
                     OnPropertyChanged(nameof(Distance));
                 }
@@ -157,7 +157,7 @@ namespace PaceCalculator.MVVM.Model
 
             return val >= 0;
         }
-        private float? ToFloat(string s)
+        public static float? ToFloat(string s)
         {
             if (s == "") { return 0.0f; }
 
@@ -182,7 +182,7 @@ namespace PaceCalculator.MVVM.Model
 
             return val >= 0;
         }
-        private int? ToInt(string s)
+        public static int? ToInt(string s)
         {
             if (s == "") { return 0; }
 

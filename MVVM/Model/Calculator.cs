@@ -1,18 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using PaceCalculator.Core;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace PaceCalculator.MVVM.Model
 {
-    public class Calculator
+    public class Calculator : ObservableObject
     {
-        private List<Interval> intervals;
-        public (int, int) avgPace { get; set; }
+        private List<Interval> intervals = new List<Interval>();
+        private (int, int) _avgPace = (0, 0);
+        public (int, int) AvgPace
+        { 
+            get { return _avgPace; }
+            set
+            {
+                if(_avgPace != value)
+                {
+                    _avgPace = value;
+                    OnPropertyChanged(nameof(AvgPace));
+                }
+            }
+        }
 
         public Calculator()
-        {
-            intervals = new List<Interval>();
-            avgPace = (0, 0);
-        }
+        { }
 
         public void Clear()
         {
@@ -34,9 +44,7 @@ namespace PaceCalculator.MVVM.Model
                 totalDistance += interval.distance;
             }
             Interval calc_int = new Interval(totalDistance, (0, 0, totalSeconds));
-            avgPace = calc_int.avgPace;
-
-            Debug.WriteLine(avgPace);
+            AvgPace = calc_int.avgPace;
         }
     }
 }

@@ -12,8 +12,6 @@ namespace PaceCalculator.Commands
         public DistancedAddRowButtonPressed(DistancedIntervalViewModel viewModel)
         {
             _viewModel = viewModel;
-
-            //_viewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
 
         public override bool CanExecute(object? parameter)
@@ -25,9 +23,6 @@ namespace PaceCalculator.Commands
         {
             _viewModel.DistancedGridRows.Add(new DistancedIntervalGridRow());
         }
-
-        private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
-        { }
 
     }
 }

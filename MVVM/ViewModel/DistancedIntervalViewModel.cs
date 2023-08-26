@@ -1,17 +1,13 @@
 ﻿using PaceCalculator.Commands;
 using PaceCalculator.Core;
 using PaceCalculator.MVVM.Model;
-using System;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics;
 
 namespace PaceCalculator.MVVM.ViewModel
 {
     public class DistancedIntervalViewModel : ObservableObject
     {
-        private Calculator _calculator; //for calculations
+        private Calculator _calculator; //for pace related calculations
         public Calculator DistancedCalculator
         {
             get { return _calculator; }
@@ -23,19 +19,11 @@ namespace PaceCalculator.MVVM.ViewModel
             get { return isPaceShown; }
             set 
             { 
-                isPaceShown = value;
-                OnPropertyChanged(nameof(IsPaceShown));
-            }
-        }
-
-        private bool _canCalculate;
-        public bool CanCalculate
-        {
-            get { return _canCalculate; }
-            set
-            {
-                _canCalculate = value;
-                OnPropertyChanged(nameof(CanCalculate));
+                if(isPaceShown != value)
+                {
+                    isPaceShown = value;
+                    OnPropertyChanged(nameof(IsPaceShown));
+                }
             }
         }
 

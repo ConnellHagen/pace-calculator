@@ -11,6 +11,8 @@
     
     <UserControl.Resources>
         <converter:ValidityToEntryBoxColorConverter x:Key="EntryBoxConverter"/>
+        <converter:PaceShownToPaceDisplayHeightConverter x:Key="PaceDisplayConverter"/>
+        <converter:AveragePaceToStringConverter x:Key="PaceToStringConverter"/>
     </UserControl.Resources>
     
     <UserControl.DataContext>
@@ -22,7 +24,7 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="60"/>
-            <RowDefinition Height="0" Name="AverageDisplayRow"/>
+            <RowDefinition Height="{Binding IsPaceShown, Converter={StaticResource PaceDisplayConverter}}"/>
         </Grid.RowDefinitions>
         <Grid Background="Transparent" Margin="0,5,0,0" Grid.Row="0">
             <Grid.ColumnDefinitions>
@@ -105,6 +107,9 @@
                     Grid.Column="1"
                     Command="{Binding AddRowButtonCommand}"
                     Style="{StaticResource AddButtonTheme}"/>
+        </Grid>
+        <Grid Grid.Row="3">
+            <TextBox Text="{Binding DistancedCalculator.AvgPace, Converter={StaticResource PaceToStringConverter}}" Style="{StaticResource PaceDisplayTheme}"/>
         </Grid>
     </Grid>
 </UserControl>

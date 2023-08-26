@@ -48,7 +48,7 @@
                          Style="{StaticResource MenuButtonTheme}"
                          IsChecked="True"
                          Command="{Binding DistancedIntervalCommand}"/>
-            <RadioButton Content="Paced Intervals"
+            <!--<RadioButton Content="Paced Intervals"
                          Height="50"
                          Foreground="#DBDBDB"
                          FontSize="14"
@@ -58,7 +58,7 @@
                          Height="50"
                          Foreground="#DBDBDB"
                          FontSize="14"
-                         Style="{StaticResource MenuButtonTheme}"/>
+                         Style="{StaticResource MenuButtonTheme}"/>-->
         </StackPanel>
 
         <ContentControl Grid.Row="1"

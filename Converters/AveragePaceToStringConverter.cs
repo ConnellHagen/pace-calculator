@@ -20,7 +20,10 @@ namespace PaceCalculator.Converters
             }
 
             var _avgPace = ((int, int))avgPace;
-            return $"Average Pace: {_avgPace.Item1}'{_avgPace.Item2}\"";
+            string extra0 = "";
+            if(_avgPace.Item2 < 10) extra0 = "0";
+
+            return $"Average Pace: {_avgPace.Item1}'{extra0}{_avgPace.Item2}\"";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

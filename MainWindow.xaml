@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Height="600" Width="920" 
         Background="#454545"
-        Icon="/Images/logo.png">
+        Icon="pack://application:,,,/Images/logo.png"
+        Title="Pace Calculator v2.0.0">
 
     <Window.DataContext>
         <viewModel:MainViewModel/>

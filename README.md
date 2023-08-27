@@ -2,9 +2,10 @@
 This is a calculator that allows for the calculation of the average running pace among intervals. This is especially useful for run workouts like Fartleks
 and track repeats where there are rest periods between the active periods of work.
 
-Fartlek Example (actual workout of mine)                                                                      |Track Workout Example 
+Fartlek Example (actual workout of mine)                                                                      |Random Number Example 
 :------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------:
-![image](https://github.com/ConnellHagen/pace-calculator/assets/72321241/d159b9cc-8ffc-4ed9-ab91-98292128ef90)|![image](https://github.com/ConnellHagen/pace-calculator/assets/72321241/f915a783-d9cc-4301-9603-ee79d6fa4e69)
+![image](https://github.com/ConnellHagen/pace-calculator/assets/72321241/f5a48738-9865-4c9b-9298-d18251b62257)|![image](https://github.com/ConnellHagen/pace-calculator/assets/72321241/cd56c1ef-4b35-44ef-98f1-36720ded664e)
+
 
 
 # Usage
@@ -17,11 +18,10 @@ Desktop, or wherever you wish to keep this program installed. To run the program
 problems with this, please open an Issue.
 
 # License
-This project is free for any non-commercial usage. Please contact me if you would like to use this software in a way that is commercial or not clear.
+This project is free for any non-commercial usage. Please contact me if you would like to use this software in a way that is commercial or unclear.
 
 # Updates
 Planned updates include: 
 - The ability to find average pace using different information, such as pace (Apple watch gives a more accurate pace than
 distance to work with than distance for shorter Fartleks.
-- Toggleable dark mode.
 - Mile/Kilometer conversion.

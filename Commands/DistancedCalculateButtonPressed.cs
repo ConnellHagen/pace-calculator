@@ -21,6 +21,7 @@ namespace PaceCalculator.Commands
 
         public override bool CanExecute(object? parameter)
         {
+            if (_viewModel.DistancedGridRows.Count == 0) return false;
             foreach(DistancedIntervalGridRow row in _viewModel.DistancedGridRows)
             {
                 if (!row.IsValid) return false;

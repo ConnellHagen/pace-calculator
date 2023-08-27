@@ -77,7 +77,7 @@ namespace PaceCalculator.MVVM.Model
                 if(_minutes != value)
                 {
                     _minutes = value;
-                    IsMinutesValid = IsValidIntEntry(Minutes);
+                    IsMinutesValid = IsValidIntEntry(Minutes) && ToInt(Minutes) < 60;
                     ValidateRow();
                     OnPropertyChanged(nameof(Minutes));
                 }
@@ -107,7 +107,7 @@ namespace PaceCalculator.MVVM.Model
                 if(_seconds != value)
                 {
                     _seconds = value;
-                    IsSecondsValid = IsValidFloatEntry(Seconds);
+                    IsSecondsValid = IsValidFloatEntry(Seconds) && ToFloat(Seconds) < 60;
                     ValidateRow();
                     OnPropertyChanged(nameof(Seconds));
                 }
@@ -143,8 +143,7 @@ namespace PaceCalculator.MVVM.Model
         }
 
         public DistancedIntervalGridRow()
-        {
-        }
+        { }
 
         private bool IsValidFloatEntry(string test)
         {

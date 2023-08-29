@@ -8,7 +8,7 @@
         Height="600" Width="920" 
         Background="#454545"
         Icon="pack://application:,,,/Images/logo.png"
-        Title="Pace Calculator v2.0.0">
+        Title="Pace Calculator v2.1.0">
 
     <Window.DataContext>
         <viewModel:MainViewModel/>
@@ -39,23 +39,24 @@
         </Grid>
 
         <StackPanel Grid.Row="1"
-                    Grid.Column="0"
-                    Background="#FE5448">
-            <RadioButton Content="Distanced Intervals"
+                    Grid.Column="0">
+            <StackPanel.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#FE5448" Offset="0.0"/>
+                    <GradientStop Color="#FE200B" Offset="1.0"/>
+                </LinearGradientBrush>
+            </StackPanel.Background>
+            <RadioButton Content="Paced Intervals"
                          Height="50"
                          Margin="0,20,0,0"
-                         Foreground="#DBDBDB"
-                         FontSize="14"
                          Style="{StaticResource MenuButtonTheme}"
-                         IsChecked="True"
-                         Command="{Binding DistancedIntervalCommand}"/>
-            <!--<RadioButton Content="Paced Intervals"
+                         Command="{Binding SetViewPacedInterval}"
+                         IsChecked="True"/>
+            <RadioButton Content="Distanced Intervals"
                          Height="50"
-                         Foreground="#DBDBDB"
-                         FontSize="14"
                          Style="{StaticResource MenuButtonTheme}"
-                         Command="{Binding PacedIntervalCommand}"/>
-            <RadioButton Content="Intervals"
+                         Command="{Binding SetViewDistancedInterval}"/>
+            <!--<RadioButton Content="Intervals"
                          Height="50"
                          Foreground="#DBDBDB"
                          FontSize="14"

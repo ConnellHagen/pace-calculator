@@ -1,7 +1,4 @@
 ﻿using PaceCalculator.Core;
-using System;
-using System.ComponentModel;
-using System.Diagnostics;
 
 namespace PaceCalculator.MVVM.Model
 {
@@ -142,10 +139,24 @@ namespace PaceCalculator.MVVM.Model
             }
         }
 
+        private bool _isTimeValid = false;
+        public bool IsTimeValid
+        {
+            get { return _isTimeValid; }
+            set
+            {
+                if (_isTimeValid != value)
+                {
+                    _isTimeValid = value;
+                    OnPropertyChanged(nameof(IsTimeValid));
+                }
+            }
+        }
+
         public DistancedIntervalGridRow()
         { }
 
-        private bool IsValidFloatEntry(string test)
+        private static bool IsValidFloatEntry(string test)
         {
             float? val = ToFloat(test);
 
@@ -170,7 +181,7 @@ namespace PaceCalculator.MVVM.Model
             return null;
         }
 
-        private bool IsValidIntEntry(string test)
+        private static bool IsValidIntEntry(string test)
         {
             int? val = ToInt(test);
 
@@ -203,17 +214,8 @@ namespace PaceCalculator.MVVM.Model
          */
         private void ValidateRow()
         {
-            bool oldIsValid = IsValid;
-            if(!(IsDistanceValid && IsHoursValid && IsMinutesValid && IsSecondsValid) || 
-                (ToFloat(Distance) == 0.0f) ||
-                (ToInt(Hours) == 0 && ToInt(Minutes) == 0 && ToFloat(Seconds) == 0.0f))
-            {
-                IsValid = false;
-            }
-            else
-            {
-                IsValid = true;
-            }
+            IsTimeValid = !(ToInt(Hours) == 0 && ToInt(Minutes) == 0 && ToFloat(Seconds) == 0.0f);
+            IsValid = (IsDistanceValid && IsHoursValid && IsMinutesValid && IsSecondsValid) && IsTimeValid;
         }
 
     }

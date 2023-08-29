@@ -40,11 +40,11 @@ namespace PaceCalculator.MVVM.Model
             float totalDistance = 0.0f;
             foreach (Interval interval in intervals)
             {
-                totalSeconds += interval.seconds;
-                totalDistance += interval.distance;
+                totalSeconds += interval.Seconds;
+                totalDistance += interval.Distance;
             }
             Interval calc_int = new Interval(totalDistance, (0, 0, totalSeconds));
-            AvgPace = calc_int.avgPace;
+            AvgPace = calc_int.AvgPace;
         }
     }
 }

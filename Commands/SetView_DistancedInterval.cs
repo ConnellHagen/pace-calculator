@@ -1,13 +1,14 @@
 ﻿using PaceCalculator.Core;
-using PaceCalculator.MVVM.Model;
 using PaceCalculator.MVVM.ViewModel;
+using System.Diagnostics;
 
 namespace PaceCalculator.Commands
 {
-    public class DistancedAddRowButtonPressed : RelayCommand
+    public class SetView_DistancedInterval : RelayCommand
     {
-        private DistancedIntervalViewModel _viewModel;
-        public DistancedAddRowButtonPressed(DistancedIntervalViewModel viewModel)
+        private MainViewModel _viewModel;
+
+        public SetView_DistancedInterval(MainViewModel viewModel)
         {
             _viewModel = viewModel;
         }
@@ -19,7 +20,7 @@ namespace PaceCalculator.Commands
 
         public override void Execute(object? parameter)
         {
-            _viewModel.DistancedGridRows.Add(new DistancedIntervalGridRow());
+            _viewModel.CurrentView = _viewModel.DistancedIntervalVM;
         }
 
     }

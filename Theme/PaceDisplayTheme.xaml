@@ -5,10 +5,15 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Border CornerRadius="10"
-                            Background="#D3A458" 
+                    <Border CornerRadius="7"
                             Height="Auto"
                             Margin="5">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#D3A458" Offset="0.0"/>
+                                <GradientStop Color="#C18B33" Offset="1.0"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
                         <Grid>
                             <Rectangle StrokeThickness="1"/>
                             <TextBlock Margin="10,0,10,0"

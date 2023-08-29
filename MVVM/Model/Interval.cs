@@ -4,64 +4,64 @@ namespace PaceCalculator.MVVM.Model
 {
     public class Interval
     {
-        public float distance { get; set; }
-        public float seconds { get; set; }
-        public (int, int) avgPace { get; set; }
+        public float Distance { get; set; }
+        public float Seconds { get; set; }
+        public (int, int) AvgPace { get; set; }
 
         public Interval()
         {
-            distance = 0;
-            seconds = 0;
-            avgPace = (0, 0); // pace in format of (minutes, seconds) per unit (mile or km)
+            Distance = 0;
+            Seconds = 0;
+            AvgPace = (0, 0); // pace in format of (minutes, Seconds) per unit (mile or km)
         }
 
-        // `time` is of the format (hours, minutes, seconds)
-        public Interval(float distance, (int, int, float) time)
+        // `time` is of the format (hours, minutes, Seconds)
+        public Interval(float Distance, (int, int, float) time)
         {
-            this.distance = distance;
-            seconds = time.Item1 * 3600 + time.Item2 * 60 + time.Item3;
-            avgPace = (0, 0);
+            this.Distance = Distance;
+            Seconds = time.Item1 * 3600 + time.Item2 * 60 + time.Item3;
+            AvgPace = (0, 0);
             CalcAvgPace();
         }
 
-        public Interval(float distance, (int, int) avgPace)
+        public Interval(float Distance, (int, int) AvgPace)
         {
-            this.distance = distance;
-            seconds = 0;
-            this.avgPace = avgPace;
+            this.Distance = Distance;
+            Seconds = 0;
+            this.AvgPace = AvgPace;
             CalcSeconds();
         }
 
-        public Interval((int, int, float) time, (int, int) avgPace)
+        public Interval((int, int, float) time, (int, int) AvgPace)
         {
-            distance = 0;
-            seconds = time.Item1 * 3600 + time.Item2 * 60 + time.Item3;
-            this.avgPace = avgPace;
+            Distance = 0;
+            Seconds = time.Item1 * 3600 + time.Item2 * 60 + time.Item3;
+            this.AvgPace = AvgPace;
             CalcDistance();
         }
 
         public void CalcAvgPace()
         {
-            float secPerDistUnit = seconds / distance;
+            float secPerDistUnit = Seconds / Distance;
 
             int paceMinutes = (int)secPerDistUnit / 60;
             secPerDistUnit -= paceMinutes * 60;
 
             int paceSeconds = (int)Math.Round(secPerDistUnit);
 
-            avgPace = (paceMinutes, paceSeconds);
+            AvgPace = (paceMinutes, paceSeconds);
         }
 
         public void CalcSeconds()
         {
-            int paceSecondsPerUnit = 60 * avgPace.Item1 + avgPace.Item2;
-            seconds = paceSecondsPerUnit * distance;
+            int paceSecondsPerUnit = 60 * AvgPace.Item1 + AvgPace.Item2;
+            Seconds = paceSecondsPerUnit * Distance;
         }
 
         public void CalcDistance()
         {
-            int paceSecondsPerUnit = 60 * avgPace.Item1 + avgPace.Item2;
-            distance = seconds / paceSecondsPerUnit;
+            int paceSecondsPerUnit = 60 * AvgPace.Item1 + AvgPace.Item2;
+            Distance = Seconds / paceSecondsPerUnit;
         }
     }
 }

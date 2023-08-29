@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using PaceCalculator.MVVM.Model;
 
 namespace PaceCalculator
 {

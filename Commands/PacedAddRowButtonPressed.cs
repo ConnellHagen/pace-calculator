@@ -4,10 +4,10 @@ using PaceCalculator.MVVM.ViewModel;
 
 namespace PaceCalculator.Commands
 {
-    public class DistancedAddRowButtonPressed : RelayCommand
+    public class PacedAddRowButtonPressed : RelayCommand
     {
-        private DistancedIntervalViewModel _viewModel;
-        public DistancedAddRowButtonPressed(DistancedIntervalViewModel viewModel)
+        private PacedIntervalViewModel _viewModel;
+        public PacedAddRowButtonPressed(PacedIntervalViewModel viewModel)
         {
             _viewModel = viewModel;
         }
@@ -19,7 +19,7 @@ namespace PaceCalculator.Commands
 
         public override void Execute(object? parameter)
         {
-            _viewModel.DistancedGridRows.Add(new DistancedIntervalGridRow());
+            _viewModel.PacedGridRows.Add(new PacedIntervalGridRow());
         }
 
     }

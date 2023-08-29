@@ -57,6 +57,5 @@ namespace PaceCalculator.MVVM.ViewModel
 
         }
 
-
     }
 }

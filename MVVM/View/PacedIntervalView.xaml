@@ -4,9 +4,178 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PaceCalculator.MVVM.View"
+             xmlns:viewModel="clr-namespace:PaceCalculator.MVVM.ViewModel"
+             xmlns:converter="clr-namespace:PaceCalculator.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="Orange">
-            
+             d:DesignHeight="580" d:DesignWidth="720">
+
+    <UserControl.Resources>
+        <converter:ValidityToEntryBoxColorConverter x:Key="EntryBoxConverter"/>
+        <converter:MultiValidityToEntryBoxColorConverter x:Key="MultiEntryBoxConverter"/>
+        <converter:PaceShownToPaceDisplayHeightConverter x:Key="PaceDisplayConverter"/>
+        <converter:AveragePaceToStringConverter x:Key="PaceToStringConverter"/>
+    </UserControl.Resources>
+
+    <UserControl.DataContext>
+        <viewModel:PacedIntervalViewModel/>
+    </UserControl.DataContext>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="{Binding IsPaceShown, Converter={StaticResource PaceDisplayConverter}}"/>
+        </Grid.RowDefinitions>
+
+        <Grid Background="Transparent" Margin="0,5,0,0" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0"
+                       Margin="5,0,0,0"
+                       Text="Time"
+                       FontWeight="DemiBold"
+                       Background="Transparent"
+                       FontSize="30"
+                       Foreground="#DBDBDB"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="1"
+                       Margin="5,0,0,0"
+                       Text="Pace"
+                       FontWeight="DemiBold"
+                       Background="Transparent"
+                       FontSize="30"
+                       Foreground="#DBDBDB"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"/>
+        </Grid>
+
+        <Grid Background="Transparent" Margin="0,5,0,0" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" Style="{StaticResource ColumnLabelTheme}" IsReadOnly="True" Text="Hours"/>
+            <TextBox Grid.Column="1" Style="{StaticResource ColumnLabelTheme}" IsReadOnly="True" Text="Minutes"/>
+            <TextBox Grid.Column="2" Style="{StaticResource ColumnLabelTheme}" IsReadOnly="True" Text="Seconds"/>
+            <TextBox Grid.Column="3" Style="{StaticResource ColumnLabelTheme}" IsReadOnly="True" Text="Minutes"/>
+            <TextBox Grid.Column="4" Style="{StaticResource ColumnLabelTheme}" IsReadOnly="True" Text="Seconds"/>
+            <TextBox Grid.Column="5" Style="{StaticResource ColumnLabelTheme}" IsReadOnly="True" Text=""/>
+
+        </Grid>
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Hidden" Margin="0,0,0,10" Background="Transparent">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <ItemsControl ItemsSource="{Binding PacedGridRows}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="50"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox Grid.Column="0"
+                                         Text="{Binding Path=TimeHours, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{StaticResource DataEntryBoxTheme}">
+                                    <TextBox.Background>
+                                        <MultiBinding Converter="{StaticResource MultiEntryBoxConverter}">
+                                            <Binding Path="IsTimeHoursValid"/>
+                                            <Binding Path="IsTimeValid"/>
+                                        </MultiBinding>
+                                    </TextBox.Background>
+                                </TextBox>
+                                <TextBox Grid.Column="1"
+                                         Text="{Binding Path=TimeMinutes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{StaticResource DataEntryBoxTheme}">
+                                    <TextBox.Background>
+                                        <MultiBinding Converter="{StaticResource MultiEntryBoxConverter}">
+                                            <Binding Path="IsTimeMinutesValid"/>
+                                            <Binding Path="IsTimeValid"/>
+                                        </MultiBinding>
+                                    </TextBox.Background>
+                                </TextBox>
+                                <TextBox Grid.Column="2"
+                                         Text="{Binding Path=TimeSeconds, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{StaticResource DataEntryBoxTheme}">
+                                    <TextBox.Background>
+                                        <MultiBinding Converter="{StaticResource MultiEntryBoxConverter}">
+                                            <Binding Path="IsTimeSecondsValid"/>
+                                            <Binding Path="IsTimeValid"/>
+                                        </MultiBinding>
+                                    </TextBox.Background>
+                                </TextBox>
+                                <TextBox Grid.Column="3"
+                                         Text="{Binding Path=PaceMinutes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{StaticResource DataEntryBoxTheme}">
+                                    <TextBox.Background>
+                                        <MultiBinding Converter="{StaticResource MultiEntryBoxConverter}">
+                                            <Binding Path="IsPaceMinutesValid"/>
+                                            <Binding Path="IsPaceValid"/>
+                                        </MultiBinding>
+                                    </TextBox.Background>
+                                </TextBox>
+                                <TextBox Grid.Column="4"
+                                         Text="{Binding Path=PaceSeconds, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{StaticResource DataEntryBoxTheme}">
+                                    <TextBox.Background>
+                                        <MultiBinding Converter="{StaticResource MultiEntryBoxConverter}">
+                                            <Binding Path="IsPaceSecondsValid"/>
+                                            <Binding Path="IsPaceValid"/>
+                                        </MultiBinding>
+                                    </TextBox.Background>
+                                </TextBox>
+                                <Button Grid.Column="5"
+                                        Command="{Binding DataContext.RemoveRowButtonCommand,
+                                                          RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        Style="{DynamicResource RemoveButtonTheme}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </ScrollViewer>
+
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0"
+                    Command="{Binding CalculateButtonCommand}"
+                    Style="{StaticResource CalculateButtonTheme}"/>
+            <Button Grid.Column="1"
+                    Command="{Binding AddRowButtonCommand}"
+                    Style="{StaticResource AddButtonTheme}"/>
+        </Grid>
+        <Grid Grid.Row="4">
+            <TextBox Text="{Binding PacedCalculator.AvgPace, Converter={StaticResource PaceToStringConverter}}" Style="{StaticResource PaceDisplayTheme}"/>
+        </Grid>
     </Grid>
 </UserControl>

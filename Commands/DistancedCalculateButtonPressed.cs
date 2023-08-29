@@ -3,7 +3,6 @@ using PaceCalculator.MVVM.Model;
 using PaceCalculator.MVVM.ViewModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 
 namespace PaceCalculator.Commands
 {
@@ -14,10 +13,8 @@ namespace PaceCalculator.Commands
         {
             _viewModel = viewModel;
 
-            _viewModel.PropertyChanged += OnViewModelPropertyChanged;
             _viewModel.DistancedGridRows.CollectionChanged += OnDistancedGridCollectionChanged;
         }
-
 
         public override bool CanExecute(object? parameter)
         {
@@ -51,13 +48,6 @@ namespace PaceCalculator.Commands
             _viewModel.IsPaceShown = true;
         }
 
-        private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(_viewModel.IsPaceShown))
-            {
-                Debug.WriteLine("IsPaceShown Updated");
-            }
-        }
         private void OnDistancedGridCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.OldItems != null)

@@ -6,10 +6,10 @@ using System.Windows.Media;
 
 namespace PaceCalculator.Commands
 {
-    public class DistancedRemoveRowButtonPressed : RelayCommand
+    public class PacedRemoveRowButtonPressed : RelayCommand
     {
-        private DistancedIntervalViewModel _viewModel;
-        public DistancedRemoveRowButtonPressed(DistancedIntervalViewModel viewModel)
+        private PacedIntervalViewModel _viewModel;
+        public PacedRemoveRowButtonPressed(PacedIntervalViewModel viewModel)
         {
             _viewModel = viewModel;
         }
@@ -37,7 +37,7 @@ namespace PaceCalculator.Commands
 
             row = panel.Children.IndexOf(presenter);
 
-            _viewModel.DistancedGridRows.RemoveAt(row);
+            _viewModel.PacedGridRows.RemoveAt(row);
         }
 
     }

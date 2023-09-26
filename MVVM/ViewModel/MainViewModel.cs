@@ -8,6 +8,8 @@ namespace PaceCalculator.MVVM.ViewModel
         public PacedIntervalViewModel PacedIntervalVM { get; } = new PacedIntervalViewModel();
         public DistancedIntervalViewModel DistancedIntervalVM { get; } = new DistancedIntervalViewModel();
 
+        public PaceConversionViewModel PaceConversionVM { get; } = new PaceConversionViewModel();
+
         private object _currentView;
 
         public SetView_PacedInterval SetViewPacedInterval { get; }

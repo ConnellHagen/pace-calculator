@@ -24,6 +24,10 @@
             <DataTemplate DataType="{x:Type viewModel:PacedIntervalViewModel}">
                 <view:PacedIntervalView/>
             </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type viewModel:PaceConversionViewModel}">
+                <view:PaceConversionView/>
+            </DataTemplate>
 
         </ResourceDictionary>
     </Application.Resources>

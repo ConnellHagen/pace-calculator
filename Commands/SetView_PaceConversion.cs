@@ -1,5 +1,6 @@
 ﻿using PaceCalculator.Core;
 using PaceCalculator.MVVM.ViewModel;
+using System.Diagnostics;
 
 namespace PaceCalculator.Commands
 {
@@ -19,7 +20,7 @@ namespace PaceCalculator.Commands
 
         public override void Execute(object? parameter)
         {
-            _viewModel.CurrentView = _viewModel.PacedIntervalVM;
+            _viewModel.CurrentView = _viewModel.PaceConversionVM;
         }
 
     }

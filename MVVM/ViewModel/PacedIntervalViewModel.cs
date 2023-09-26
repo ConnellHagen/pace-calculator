@@ -53,7 +53,7 @@ namespace PaceCalculator.MVVM.ViewModel
             AddRowButtonCommand = new PacedAddRowButtonPressed(this);
             RemoveRowButtonCommand = new PacedRemoveRowButtonPressed(this);
 
-            PacedGridRows.Add(new PacedIntervalGridRow()); // one row by default to start with
+            PacedGridRows.Add(new PacedIntervalGridRow()); // the grid starts with one row by default
         }
     }
 }

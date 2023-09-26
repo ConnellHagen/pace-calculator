@@ -12,6 +12,7 @@ namespace PaceCalculator.MVVM.ViewModel
 
         public SetView_PacedInterval SetViewPacedInterval { get; }
         public SetView_DistancedInterval SetViewDistancedInterval { get; }
+        public SetView_PaceConversion SetViewPaceConversion { get; }
 
         public object CurrentView
 		{
@@ -28,6 +29,7 @@ namespace PaceCalculator.MVVM.ViewModel
             _currentView = PacedIntervalVM;
             SetViewPacedInterval = new SetView_PacedInterval(this);
             SetViewDistancedInterval = new SetView_DistancedInterval(this);
+            SetViewPaceConversion = new SetView_PaceConversion(this);
         }
 
     }

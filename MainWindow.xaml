@@ -58,7 +58,8 @@
                          Command="{Binding SetViewDistancedInterval}"/>
             <RadioButton Content="Pace Conversion"
                          Height="50"
-                         Style="{StaticResource MenuButtonTheme}"/>
+                         Style="{StaticResource MenuButtonTheme}"
+                         Command="{Binding SetViewPaceConversion}"/>
         </StackPanel>
 
         <ContentControl Grid.Row="1"

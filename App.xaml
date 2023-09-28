@@ -13,6 +13,7 @@
                 <ResourceDictionary Source="Theme/ColumnLabelTheme.xaml"/>
                 <ResourceDictionary Source="Theme/DataEntryBoxTheme.xaml"/>
                 <ResourceDictionary Source="Theme/MenuButtonTheme.xaml"/>
+                <ResourceDictionary Source="Theme/MileKiloButtonTheme.xaml"/>
                 <ResourceDictionary Source="Theme/PaceDisplayTheme.xaml"/>
                 <ResourceDictionary Source="Theme/RemoveButtonTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>

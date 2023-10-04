@@ -10,6 +10,7 @@
              d:DesignHeight="580" d:DesignWidth="720">
 
     <UserControl.Resources>
+        <converter:ConversionModeToBoolConverter x:Key="ModeToBool"/>
     </UserControl.Resources>
 
     <UserControl.DataContext>
@@ -50,26 +51,51 @@
         <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource ColumnLabelTheme}" IsReadOnly="True" Text="Minutes"/>
         <TextBox Grid.Row="2" Grid.Column="2" Style="{StaticResource ColumnLabelTheme}" IsReadOnly="True" Text="Seconds"/>
 
-        <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource DataEntryBoxTheme}">
+        <TextBox Grid.Row="3" 
+                 Grid.Column="1" 
+                 Style="{StaticResource DataEntryBoxTheme}"
+                 Text="{Binding Path=MileMinutes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 IsReadOnly="{Binding ConversionMode, Mode=TwoWay, Converter={StaticResource ModeToBool}, ConverterParameter={x:Static viewModel:PaceConversionMode.KM_TO_MI}}">
             <TextBox.Background>
                 <SolidColorBrush>#676767</SolidColorBrush>
             </TextBox.Background>
         </TextBox>
-        <TextBox Grid.Row="3" Grid.Column="2" Style="{StaticResource DataEntryBoxTheme}">
+        <TextBox Grid.Row="3"
+                 Grid.Column="2"
+                 Style="{StaticResource DataEntryBoxTheme}"
+                 Text="{Binding Path=MileSeconds, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 IsReadOnly="{Binding ConversionMode, Mode=TwoWay, Converter={StaticResource ModeToBool}, ConverterParameter={x:Static viewModel:PaceConversionMode.KM_TO_MI}}">
             <TextBox.Background>
                 <SolidColorBrush>#676767</SolidColorBrush>
             </TextBox.Background>
         </TextBox>
 
-        <RadioButton Grid.Row="4" Grid.Column="1" Style="{StaticResource MileKiloButtonTheme}" Content="Mi to Km" IsChecked="True"/>
-        <RadioButton Grid.Row="4" Grid.Column="2" Style="{StaticResource MileKiloButtonTheme}" Content="Km to Mi"/>
+        <RadioButton Grid.Row="4" 
+                     Grid.Column="1" 
+                     Style="{StaticResource MileKiloButtonTheme}" 
+                     Content="mi to km" 
+                     IsChecked="{Binding ConversionMode, Mode=TwoWay, Converter={StaticResource ModeToBool}, ConverterParameter={x:Static viewModel:PaceConversionMode.MI_TO_KM}}"/>
 
-        <TextBox Grid.Row="5" Grid.Column="1" Style="{StaticResource DataEntryBoxTheme}">
+        <RadioButton Grid.Row="4" 
+                     Grid.Column="2"
+                     Style="{StaticResource MileKiloButtonTheme}"
+                     Content="km to mi"
+                     IsChecked="{Binding ConversionMode, Mode=TwoWay, Converter={StaticResource ModeToBool}, ConverterParameter={x:Static viewModel:PaceConversionMode.KM_TO_MI}}"/>
+
+        <TextBox Grid.Row="5"
+                 Grid.Column="1"
+                 Style="{StaticResource DataEntryBoxTheme}"
+                 Text="{Binding Path=KmMinutes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 IsReadOnly="{Binding ConversionMode, Mode=TwoWay, Converter={StaticResource ModeToBool}, ConverterParameter={x:Static viewModel:PaceConversionMode.MI_TO_KM}}">
             <TextBox.Background>
                 <SolidColorBrush>#676767</SolidColorBrush>
             </TextBox.Background>
         </TextBox>
-        <TextBox Grid.Row="5" Grid.Column="2" Style="{StaticResource DataEntryBoxTheme}">
+        <TextBox Grid.Row="5"
+                 Grid.Column="2"
+                 Style="{StaticResource DataEntryBoxTheme}"
+                 Text="{Binding Path=KmSeconds, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 IsReadOnly="{Binding ConversionMode, Mode=TwoWay, Converter={StaticResource ModeToBool}, ConverterParameter={x:Static viewModel:PaceConversionMode.MI_TO_KM}}">
             <TextBox.Background>
                 <SolidColorBrush>#676767</SolidColorBrush>
             </TextBox.Background>

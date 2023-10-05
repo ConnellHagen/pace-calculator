@@ -22,6 +22,8 @@ problems with this, please open an Issue.
 This project is free for any non-commercial usage. Please contact me if you would like to use this software in a way that is commercial or unclear.
 
 # Updates
-Planned updates include: 
-- Mile/Kilometer pace conversion (to aid in getting a good idea of what a pace is when talking to Br*tish people. Or I guess you could use it vice versa maybe... whatever. I tend to avoid talking to Europeans for this reason alone.)
+Next update features include:
+- Mile/Kilometer pace conversion
+
+Planned update features include: 
 - Training pace estimation using a time trial/PB, and scientific recommendations for the relative speeds for various training paces.

@@ -14,7 +14,7 @@ namespace PaceCalculator.MVVM.Model
                 if(_distance != value)
                 {
                     _distance = value;
-                    IsDistanceValid = IsValidFloatEntry(Distance) && ToFloat(Distance) != 0;
+                    IsDistanceValid = PaceHelper.IsValidFloatEntry(Distance) && PaceHelper.ToFloat(Distance) != 0;
                     ValidateRow();
                     OnPropertyChanged(nameof(Distance));
                 }
@@ -44,7 +44,7 @@ namespace PaceCalculator.MVVM.Model
                 if(_hours != value)
                 {
                     _hours = value;
-                    IsHoursValid = IsValidIntEntry(Hours);
+                    IsHoursValid = PaceHelper.IsValidIntEntry(Hours);
                     ValidateRow();
                     OnPropertyChanged(nameof(Hours));
                 }
@@ -74,7 +74,7 @@ namespace PaceCalculator.MVVM.Model
                 if(_minutes != value)
                 {
                     _minutes = value;
-                    IsMinutesValid = IsValidIntEntry(Minutes) && ToInt(Minutes) < 60;
+                    IsMinutesValid = PaceHelper.IsValidIntEntry(Minutes) && PaceHelper.ToInt(Minutes) < 60;
                     ValidateRow();
                     OnPropertyChanged(nameof(Minutes));
                 }
@@ -104,7 +104,7 @@ namespace PaceCalculator.MVVM.Model
                 if(_seconds != value)
                 {
                     _seconds = value;
-                    IsSecondsValid = IsValidFloatEntry(Seconds) && ToFloat(Seconds) < 60;
+                    IsSecondsValid = PaceHelper.IsValidFloatEntry(Seconds) && PaceHelper.ToFloat(Seconds) < 60;
                     ValidateRow();
                     OnPropertyChanged(nameof(Seconds));
                 }
@@ -156,56 +156,6 @@ namespace PaceCalculator.MVVM.Model
         public DistancedIntervalGridRow()
         { }
 
-        private static bool IsValidFloatEntry(string test)
-        {
-            float? val = ToFloat(test);
-
-            if (val == null)
-            {
-                return false;
-            }
-
-            return val >= 0;
-        }
-        public static float? ToFloat(string s)
-        {
-            if (s == "") { return 0.0f; }
-
-            float val;
-
-            if (float.TryParse(s, out val))
-            {
-                return val;
-            }
-
-            return null;
-        }
-
-        private static bool IsValidIntEntry(string test)
-        {
-            int? val = ToInt(test);
-
-            if (val == null)
-            {
-                return false;
-            }
-
-            return val >= 0;
-        }
-        public static int? ToInt(string s)
-        {
-            if (s == "") { return 0; }
-
-            int val;
-
-            if (int.TryParse(s, out val))
-            {
-                return val;
-            }
-
-            return null;
-        }
-
         /* updates `IsValid` as false if:
          * 1. all fields do not individually evaluate to valid
          * OR
@@ -214,7 +164,7 @@ namespace PaceCalculator.MVVM.Model
          */
         private void ValidateRow()
         {
-            IsTimeValid = !(ToInt(Hours) == 0 && ToInt(Minutes) == 0 && ToFloat(Seconds) == 0.0f);
+            IsTimeValid = !(PaceHelper.ToInt(Hours) == 0 && PaceHelper.ToInt(Minutes) == 0 && PaceHelper.ToFloat(Seconds) == 0.0f);
             IsValid = (IsDistanceValid && IsHoursValid && IsMinutesValid && IsSecondsValid) && IsTimeValid;
         }
 

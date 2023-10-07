@@ -1,6 +1,7 @@
 ﻿using PaceCalculator.Core;
 using PaceCalculator.MVVM.Model;
 using PaceCalculator.MVVM.ViewModel;
+using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
 
@@ -33,16 +34,27 @@ namespace PaceCalculator.Commands
 
             foreach (PacedIntervalGridRow row in _viewModel.PacedGridRows)
             {
+                int? timeHours = PaceHelper.ToInt(row.TimeHours);
+                int? timeMinutes = PaceHelper.ToInt(row.TimeMinutes);
+                float? timeSeconds = PaceHelper.ToFloat(row.TimeSeconds);
+                int? paceMinutes = PaceHelper.ToInt(row.PaceMinutes);
+                int? paceSeconds = PaceHelper.ToInt(row.PaceSeconds);
+
+                if(timeHours == null || timeMinutes == null || timeSeconds == null || paceMinutes == null || paceSeconds == null)
+                {
+                    throw new ArgumentNullException();
+                }
+
                 _viewModel.PacedCalculator.AddInterval(
                     new Interval(
                         (
-                            (int)PacedIntervalGridRow.ToInt(row.TimeHours),
-                            (int)PacedIntervalGridRow.ToInt(row.TimeMinutes),
-                            (float)PacedIntervalGridRow.ToFloat(row.TimeSeconds)
+                            (int)timeHours,
+                            (int)timeMinutes,
+                            (float)timeSeconds
                         ),
                         (
-                            (int)PacedIntervalGridRow.ToInt(row.PaceMinutes),
-                            (int)PacedIntervalGridRow.ToInt(row.PaceSeconds)
+                            (int)paceMinutes,
+                            (int)paceSeconds
                         )
                     )
                 );

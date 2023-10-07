@@ -1,8 +1,10 @@
 ﻿using PaceCalculator.Core;
 using PaceCalculator.MVVM.Model;
 using PaceCalculator.MVVM.ViewModel;
+using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Configuration;
 
 namespace PaceCalculator.Commands
 {
@@ -32,12 +34,22 @@ namespace PaceCalculator.Commands
 
             foreach (DistancedIntervalGridRow row in _viewModel.DistancedGridRows)
             {
+                float? distance = PaceHelper.ToFloat(row.Distance);
+                int? hours = PaceHelper.ToInt(row.Hours);
+                int? minutes = PaceHelper.ToInt(row.Minutes);
+                float? seconds = PaceHelper.ToFloat(row.Seconds);
+
+                if (distance == null || hours == null || minutes == null || seconds == null)
+                {
+                    throw new ArgumentNullException();
+                }
+
                 _viewModel.DistancedCalculator.AddInterval(
-                    new Interval(
-                        (float)DistancedIntervalGridRow.ToFloat(row.Distance), (
-                            (int)DistancedIntervalGridRow.ToInt(row.Hours),
-                            (int)DistancedIntervalGridRow.ToInt(row.Minutes),
-                            (float)DistancedIntervalGridRow.ToFloat(row.Seconds)
+                    new Interval(  
+                        (float)distance, (
+                            (int)hours,
+                            (int)minutes,
+                            (float)seconds
                         )
                     )
                 );

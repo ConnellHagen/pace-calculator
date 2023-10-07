@@ -11,6 +11,7 @@
 
     <UserControl.Resources>
         <converter:ConversionModeToBoolConverter x:Key="ModeToBool"/>
+        <converter:MultiValidityToEntryBoxColorConverter x:Key="MultiEntryBoxConverter"/>
     </UserControl.Resources>
 
     <UserControl.DataContext>
@@ -57,7 +58,10 @@
                  Text="{Binding Path=MileMinutes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  IsReadOnly="{Binding ConversionMode, Mode=TwoWay, Converter={StaticResource ModeToBool}, ConverterParameter={x:Static viewModel:PaceConversionMode.KM_TO_MI}}">
             <TextBox.Background>
-                <SolidColorBrush>#676767</SolidColorBrush>
+                <MultiBinding Converter="{StaticResource MultiEntryBoxConverter}">
+                    <Binding Path="IsMileMinutesValid"/>
+                    <Binding Path="IsMilePaceValid"/>
+                </MultiBinding>
             </TextBox.Background>
         </TextBox>
         <TextBox Grid.Row="3"
@@ -66,7 +70,10 @@
                  Text="{Binding Path=MileSeconds, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  IsReadOnly="{Binding ConversionMode, Mode=TwoWay, Converter={StaticResource ModeToBool}, ConverterParameter={x:Static viewModel:PaceConversionMode.KM_TO_MI}}">
             <TextBox.Background>
-                <SolidColorBrush>#676767</SolidColorBrush>
+                <MultiBinding Converter="{StaticResource MultiEntryBoxConverter}">
+                    <Binding Path="IsMileSecondsValid"/>
+                    <Binding Path="IsMilePaceValid"/>
+                </MultiBinding>
             </TextBox.Background>
         </TextBox>
 
@@ -88,7 +95,10 @@
                  Text="{Binding Path=KmMinutes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  IsReadOnly="{Binding ConversionMode, Mode=TwoWay, Converter={StaticResource ModeToBool}, ConverterParameter={x:Static viewModel:PaceConversionMode.MI_TO_KM}}">
             <TextBox.Background>
-                <SolidColorBrush>#676767</SolidColorBrush>
+                <MultiBinding Converter="{StaticResource MultiEntryBoxConverter}">
+                    <Binding Path="IsKmMinutesValid"/>
+                    <Binding Path="IsKmPaceValid"/>
+                </MultiBinding>
             </TextBox.Background>
         </TextBox>
         <TextBox Grid.Row="5"
@@ -97,7 +107,10 @@
                  Text="{Binding Path=KmSeconds, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  IsReadOnly="{Binding ConversionMode, Mode=TwoWay, Converter={StaticResource ModeToBool}, ConverterParameter={x:Static viewModel:PaceConversionMode.MI_TO_KM}}">
             <TextBox.Background>
-                <SolidColorBrush>#676767</SolidColorBrush>
+                <MultiBinding Converter="{StaticResource MultiEntryBoxConverter}">
+                    <Binding Path="IsKmSecondsValid"/>
+                    <Binding Path="IsKmPaceValid"/>
+                </MultiBinding>
             </TextBox.Background>
         </TextBox>
 

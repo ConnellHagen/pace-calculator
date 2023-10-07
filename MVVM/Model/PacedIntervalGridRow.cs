@@ -13,7 +13,7 @@ namespace PaceCalculator.MVVM.Model
                 if(_timeHours != value)
                 {
                     _timeHours = value;
-                    IsTimeHoursValid = IsValidIntEntry(TimeHours);
+                    IsTimeHoursValid = PaceHelper.IsValidIntEntry(TimeHours);
                     ValidateRow();
                     OnPropertyChanged(nameof(TimeHours));
                 }
@@ -43,7 +43,7 @@ namespace PaceCalculator.MVVM.Model
                 if (_timeMinutes != value)
                 {
                     _timeMinutes = value;
-                    IsTimeMinutesValid = IsValidIntEntry(TimeMinutes) && ToInt(TimeMinutes) < 60;
+                    IsTimeMinutesValid = PaceHelper.IsValidIntEntry(TimeMinutes) && PaceHelper.ToInt(TimeMinutes) < 60;
                     ValidateRow();
                     OnPropertyChanged(nameof(TimeMinutes));
                 }
@@ -73,7 +73,7 @@ namespace PaceCalculator.MVVM.Model
                 if (_timeSeconds != value)
                 {
                     _timeSeconds = value;
-                    IsTimeSecondsValid = IsValidFloatEntry(TimeSeconds) && ToFloat(TimeSeconds) < 60;
+                    IsTimeSecondsValid = PaceHelper.IsValidFloatEntry(TimeSeconds) && PaceHelper.ToFloat(TimeSeconds) < 60;
                     ValidateRow();
                     OnPropertyChanged(nameof(TimeSeconds));
                 }
@@ -103,7 +103,7 @@ namespace PaceCalculator.MVVM.Model
                 if (_paceMinutes != value)
                 {
                     _paceMinutes = value;
-                    IsPaceMinutesValid = IsValidIntEntry(PaceMinutes);
+                    IsPaceMinutesValid = PaceHelper.IsValidIntEntry(PaceMinutes);
                     ValidateRow();
                     OnPropertyChanged(nameof(PaceMinutes));
                 }
@@ -133,7 +133,7 @@ namespace PaceCalculator.MVVM.Model
                 if (_paceSeconds != value)
                 {
                     _paceSeconds = value;
-                    IsPaceSecondsValid = IsValidIntEntry(PaceSeconds) && ToInt(PaceSeconds) < 60;
+                    IsPaceSecondsValid = PaceHelper.IsValidIntEntry(PaceSeconds) && PaceHelper.ToInt(PaceSeconds) < 60;
                     ValidateRow();
                     OnPropertyChanged(nameof(PaceSeconds));
                 }
@@ -199,56 +199,6 @@ namespace PaceCalculator.MVVM.Model
         public PacedIntervalGridRow()
         { }
 
-        private bool IsValidFloatEntry(string test)
-        {
-            float? val = ToFloat(test);
-
-            if (val == null)
-            {
-                return false;
-            }
-
-            return val >= 0;
-        }
-        public static float? ToFloat(string s)
-        {
-            if (s == "") { return 0.0f; }
-
-            float val;
-
-            if (float.TryParse(s, out val))
-            {
-                return val;
-            }
-
-            return null;
-        }
-
-        private bool IsValidIntEntry(string test)
-        {
-            int? val = ToInt(test);
-
-            if (val == null)
-            {
-                return false;
-            }
-
-            return val >= 0;
-        }
-        public static int? ToInt(string s)
-        {
-            if (s == "") { return 0; }
-
-            int val;
-
-            if (int.TryParse(s, out val))
-            {
-                return val;
-            }
-
-            return null;
-        }
-
         /* updates `IsValid` as false if:
          * 1. all fields do not individually evaluate to valid
          * OR
@@ -257,8 +207,8 @@ namespace PaceCalculator.MVVM.Model
          */
         private void ValidateRow()
         {
-            IsTimeValid = !(ToInt(TimeHours) == 0 && ToInt(TimeMinutes) == 0 && ToFloat(TimeSeconds) == 0.0f);
-            IsPaceValid = !(ToInt(PaceMinutes) == 0 && ToInt(PaceSeconds) == 0);
+            IsTimeValid = !(PaceHelper.ToInt(TimeHours) == 0 && PaceHelper.ToInt(TimeMinutes) == 0 && PaceHelper.ToFloat(TimeSeconds) == 0.0f);
+            IsPaceValid = !(PaceHelper.ToInt(PaceMinutes) == 0 && PaceHelper.ToInt(PaceSeconds) == 0);
             IsValid = IsTimeHoursValid && IsTimeMinutesValid && IsTimeSecondsValid &&
                       IsPaceMinutesValid && IsPaceSecondsValid &&
                       IsTimeValid && IsPaceValid;

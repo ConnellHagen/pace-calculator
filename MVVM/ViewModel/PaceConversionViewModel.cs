@@ -5,6 +5,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Windows.Documents;
 
 namespace PaceCalculator.MVVM.ViewModel
 {
@@ -12,6 +13,14 @@ namespace PaceCalculator.MVVM.ViewModel
 
     public class PaceConversionViewModel : ObservableObject
     {
+        public const float MILE_IN_KILOMETERS = 1.609344f;
+
+        private Calculator _calculator; //for pace converting
+        public Calculator Converter
+        {
+            get { return _calculator; }
+        }
+
         private string _mileMinutes = "";
         public string MileMinutes
         {
@@ -23,6 +32,10 @@ namespace PaceCalculator.MVVM.ViewModel
                     _mileMinutes = value;
                     IsMileMinutesValid = PaceHelper.IsValidIntEntry(MileMinutes);
                     UpdateValidity();
+                    if (ConversionMode == PaceConversionMode.MI_TO_KM)
+                    {
+                        CalculateConvertedPace();
+                    }
                     OnPropertyChanged(nameof(MileMinutes));
                 }
             }
@@ -53,6 +66,10 @@ namespace PaceCalculator.MVVM.ViewModel
                     _mileSeconds = value;
                     IsMileSecondsValid = PaceHelper.IsValidFloatEntry(MileSeconds) && PaceHelper.ToFloat(MileSeconds) < 60;
                     UpdateValidity();
+                    if (ConversionMode == PaceConversionMode.MI_TO_KM)
+                    {
+                        CalculateConvertedPace();
+                    }
                     OnPropertyChanged(nameof(MileSeconds));
                 }
             }
@@ -97,6 +114,10 @@ namespace PaceCalculator.MVVM.ViewModel
                     _kmMinutes = value;
                     IsKmMinutesValid = PaceHelper.IsValidIntEntry(KmMinutes);
                     UpdateValidity();
+                    if (ConversionMode == PaceConversionMode.KM_TO_MI)
+                    {
+                        CalculateConvertedPace();
+                    }
                     OnPropertyChanged(nameof(KmMinutes));
                 }
             }
@@ -127,6 +148,10 @@ namespace PaceCalculator.MVVM.ViewModel
                     _kmSeconds = value;
                     IsKmSecondsValid = PaceHelper.IsValidFloatEntry(KmSeconds) && PaceHelper.ToFloat(KmSeconds) < 60;
                     UpdateValidity();
+                    if (ConversionMode == PaceConversionMode.KM_TO_MI)
+                    {
+                        CalculateConvertedPace();
+                    }
                     OnPropertyChanged(nameof(KmSeconds));
                 }
             }
@@ -174,44 +199,68 @@ namespace PaceCalculator.MVVM.ViewModel
         }
 
         public PaceConversionViewModel()
-        { }
-
-        public void PaceConversionViewModel_PropertyChanged(object? _sender, PropertyChangedEventArgs e)
         {
-            switch(e.PropertyName)
-            {
-                case "MileMinutes":
-                case "MileSeconds":
-                case "KmMinutes":
-                case "KmSeconds":
-                    CalculateConvertedPace();
-                    break;
-            }
-
+            _calculator = new Calculator();
         }
 
         private void CalculateConvertedPace()
         {
             if (ConversionMode == PaceConversionMode.MI_TO_KM)
             {
-                if (!IsMilePaceValid) return;
+                if ( !(IsMilePaceValid && IsMileMinutesValid && IsMileSecondsValid) )
+                {
+                    KmMinutes = "";
+                    KmSeconds = "";
+                    return;
+                }
+
+                int? mileMinutes = PaceHelper.ToInt(MileMinutes);
+                float? mileSeconds = PaceHelper.ToFloat(MileSeconds);
+                if (mileMinutes == null || mileSeconds == null)
+                {
+                    throw new ArgumentNullException();
+                }
+
+                float secondsMI = 60 * (int)mileMinutes + (float)mileSeconds;
+                float secondsKM = secondsMI / MILE_IN_KILOMETERS;
+                Converter.Clear();
+                Converter.AddInterval(new Interval( 1.0f, (0, (int)secondsKM) ));
+                Converter.CalcAvgPace();
+
+                KmMinutes = Converter.AvgPace.Item1.ToString();
+                KmSeconds = Converter.AvgPace.Item2.ToString();
             }
             else if (ConversionMode == PaceConversionMode.KM_TO_MI)
             {
-                if (!IsKmPaceValid) return;
+                if ( !(IsKmPaceValid && IsKmMinutesValid && IsKmSecondsValid) )
+                {
+                    MileMinutes = "";
+                    MileSeconds = "";
+                    return;
+                }
+
+                int? kmMinutes = PaceHelper.ToInt(KmMinutes);
+                float? kmSeconds = PaceHelper.ToFloat(KmSeconds);
+                if (kmMinutes == null || kmSeconds == null)
+                {
+                    throw new ArgumentNullException();
+                }
+
+                float secondsKM = 60 * (int)kmMinutes + (float)kmSeconds;
+                float secondsMI = secondsKM * MILE_IN_KILOMETERS;
+                Converter.Clear();
+                Converter.AddInterval(new Interval(1.0f, (0, (int)secondsMI)));
+                Converter.CalcAvgPace();
+
+                MileMinutes = Converter.AvgPace.Item1.ToString();
+                MileSeconds = Converter.AvgPace.Item2.ToString();
             }
         }
 
         private void UpdateValidity()
         {
-            if (ConversionMode == PaceConversionMode.MI_TO_KM)
-            {
                 IsMilePaceValid = !(PaceHelper.ToInt(MileMinutes) == 0 && PaceHelper.ToFloat(MileSeconds) == 0);
-            }
-            else if (ConversionMode == PaceConversionMode.KM_TO_MI)
-            {
                 IsKmPaceValid = !(PaceHelper.ToInt(KmMinutes) == 0 && PaceHelper.ToFloat(KmSeconds) == 0);
-            }
         }
 
     }

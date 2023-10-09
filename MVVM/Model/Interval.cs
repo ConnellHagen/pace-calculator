@@ -48,6 +48,11 @@ namespace PaceCalculator.MVVM.Model
             secPerDistUnit -= paceMinutes * 60;
 
             int paceSeconds = (int)Math.Round(secPerDistUnit);
+            if (paceSeconds == 60)
+            {
+                paceSeconds = 0;
+                paceMinutes++;
+            }
 
             AvgPace = (paceMinutes, paceSeconds);
         }
